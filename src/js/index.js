@@ -18,8 +18,48 @@ export default function BaseballGame() {
       }
     }
   };
+  const checkUserInputNumbersCount = userInputValue => {
+    if (userInputValue.length !== 3) {
+      alert('잘못된 값을 입력하셨습니다.');
+      return true;
+    }
+    return false;
+  };
+  const checkUserInputNumbersContainNotNumber = userInputValue => {
+    const num = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    for (let i = 0; i < 3; i++) {
+      if (!num.includes(parseInt(userInputValue[i]))) {
+        alert('잘못된 값을 입력하셨습니다.');
+        return true;
+      }
+    }
+    return false;
+  };
+  const checkUserInputNumbersContainDuplicateNumbers = userInputValue => {
+    const userInputValueArray = [];
+    for (let i = 0; i < 3; i++) {
+      if (userInputValueArray.includes(parseInt(userInputValue[i]))) {
+        alert('잘못된 값을 입력하셨습니다.');
+        return true;
+      }
+      userInputValueArray.push(parseInt(userInputValue[i]));
+    }
+    return false;
+  };
   const getUserInputNumbers = () => {
     const userInputValue = $('#user-input').value;
+    if (
+      checkUserInputNumbersCount(userInputValue) ||
+      checkUserInputNumbersContainNotNumber(userInputValue) ||
+      checkUserInputNumbersContainDuplicateNumbers(userInputValue)
+    ) {
+      return;
+    }
+    userInputNumbers = [];
+    for (let i = 0; i < 3; i++) {
+      userInputNumbers.push(parseInt(userInputValue[i]));
+    }
+    return true;
   };
 
   this.play = function (computerInputNumbers, userInputNumbers) {
